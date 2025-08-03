@@ -52,7 +52,6 @@ async function onSubmitLogin(payload: FormSubmitEvent<typeof stateLogin>) {
     const resp = await sendToBackend('post', '/api/auth/login', payload.data);
     if (resp.success) {
       toast.add({ title: 'Login successful', description: 'Welcome back!', color: 'success' });
-      navigateTo('/');
     } else {
       throw new Error(resp.message || resp.statusText || 'Login failed');
     }
@@ -72,11 +71,11 @@ async function onSubmitLogin(payload: FormSubmitEvent<typeof stateLogin>) {
 
 async function onSubmitRegister(payload: FormSubmitEvent<typeof stateRegister>) {
   try {
+    console.log("Registering...");
     loadingRegister.value = true;
     const resp = await sendToBackend('post', '/api/auth/register', payload.data);
     if (resp.success) {
       toast.add({ title: 'Register successful', description: 'Welcome aboard!', color: 'success' });
-      navigateTo('/');
     } else {
       throw new Error(resp.message || resp.statusText || 'Registration failed');
     }
@@ -107,12 +106,12 @@ async function onSubmitRegister(payload: FormSubmitEvent<typeof stateRegister>) 
       <UForm :state="stateRegister" :validate="validateRegister" title="Register" icon="i-lucide-lock"
         @submit="onSubmitRegister">
         <UFormField label="Email (no actual emails will be sent)">
-          <UInput placeholder="Enter an email" />
+          <UInput :v-model="stateRegister.email" placeholder="Enter an email" />
         </UFormField>
         <UFormField label="Password">
-          <UInput type="password" placeholder="Enter a password" />
+          <UInput v-model="stateRegister.password" type="password" placeholder="Enter a password" />
         </UFormField>
-        <UButton type="submit" :loading="loadingRegister">Login</UButton>
+        <UButton type="submit" :loading="loadingRegister">Register</UButton>
       </UForm>
     </UCard>
     <UCard class="p-4 m-4 ">
@@ -121,10 +120,10 @@ async function onSubmitRegister(payload: FormSubmitEvent<typeof stateRegister>) 
       </template>
       <UForm :state="stateLogin" :validate="validateLogin" title="Sign In" icon="i-lucide-lock" @submit="onSubmitLogin">
         <UFormField label="Email (no actual emails will be sent)">
-          <UInput placeholder="Enter the email" />
+          <UInput v-model="stateLogin.email" placeholder="Enter the email" />
         </UFormField>
         <UFormField label="Password">
-          <UInput type="password" placeholder="Enter the password" />
+          <UInput v-model="stateLogin.password" type="password" placeholder="Enter the password" />
         </UFormField>
         <UButton type="submit" :loading="loadingLogin">Login</UButton>
       </UForm>

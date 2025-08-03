@@ -11,4 +11,20 @@ export default defineNuxtConfig({
       nodeCompat: true,
     },
   },
+  runtimeConfig: {
+    public: {
+      apiServer:
+        process.env.NODE_ENV === "production"
+          ? ""
+          : process.env.NUXT_PUBLIC_API_BASE || "",
+    },
+    session: {
+      password: process.env.NUXT_SESSION_PASSWORD || "default_passwordAJ82uyAJHsjk",
+      cookie: {
+        secure: false, // Set to true in production
+
+        sameSite: "lax",
+      },
+    },
+  }
 })
