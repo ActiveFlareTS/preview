@@ -5,7 +5,7 @@
   "scripts": {
     "init": "node ./scripts/init.cjs",
     "build": "nuxt build",
-    "dev": "nuxt dev --public",
+    "dev": "if [ -f .env ]; then nuxt dev --public; else pnpm run init; fi",
     "deploy": "echo This doesn't work out of the box - it took me a few days to figure out how to get this to deploy correct.  Visit activeflare.dev/pricing to get the tools I used to make it work.",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

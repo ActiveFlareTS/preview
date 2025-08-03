@@ -23,8 +23,6 @@ try {
   let wranglerContent = fs.readFileSync(wranglerPath, 'utf8');
 
   if (wranglerContent.includes('REPLACE_DB_NAME') || wranglerContent.includes('REPLACE_DB_ID')) {
-    // Checking if wrangler is authenticated
-    execSync('pnpx wrangler login', { stdio: 'inherit' });
     rl.question('What would you like to call your D1 database? (only letters and dashes, like v3-mysite-com): ', (dbName) => {
 
       const output = execSync(`pnpx wrangler d1 create ${dbName}`, { encoding: 'utf8' });
@@ -41,7 +39,7 @@ try {
 
       if (jsonStartIndex === -1) {
         console.error('Could not find JSON object in wrangler output.');
-        console.log("You need to update your wrangler.jsonc with this info:");
+        console.log("You need to update your wrangler.jsonc with this info if the db was created:");
         console.log(output);
         process.exit(1);
       }
