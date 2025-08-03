@@ -3,15 +3,14 @@ export default defineEventHandler(async (e) => {
   console.log("Registering new user...");
   const body = await readBody(e);
   const email = body.email.toLowerCase() as string;
-  const name = body.name as string;
 
-  if (!email || !name || !body.password) {
-    console.log("Email, name, and password are required.");
-    return setResponseStatus(e, 400, "Email, name, and password are required");
+  if (!email || !body.password) {
+    console.log("Email and password are required.");
+    return setResponseStatus(e, 400, "Email and password are required");
   }
-  if (email.length < 5 || name.length < 3 || body.password.length < 6) {
+  if (email.length < 5 || body.password.length < 6) {
     console.log("Invalid lengths");
-    return setResponseStatus(e, 400, "Email, name, and password must be of valid length");
+    return setResponseStatus(e, 400, "Email and password must be of valid length");
   }
   const hashedPassword = await hashPassword(body.password as string);
   console.log("Verification complete... proceeding with user creation");

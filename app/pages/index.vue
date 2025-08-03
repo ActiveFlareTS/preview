@@ -98,17 +98,17 @@ async function onSubmitRegister(payload: FormSubmitEvent<typeof stateRegister>) 
 
   <body>
     <h1 class="m-4 font-extrabold xl">Welcome to ActiveFlareTS (Preview)</h1>
-
+    <p class="m-4">This demo isn't quite working yet.  Subscribe on [Github](https://github.com/ActiveFlareTS/preview) for tagged versions.</p>
     <UCard class="p-4 m-4 ">
       <template #header>
         <div class="xl">Register</div>
       </template>
       <UForm :state="stateRegister" :validate="validateRegister" title="Register" icon="i-lucide-lock"
         @submit="onSubmitRegister">
-        <UFormField label="Email (no actual emails will be sent)">
-          <UInput :v-model="stateRegister.email" placeholder="Enter an email" />
+        <UFormField label="Email (no actual emails will be sent)" name="email">
+          <UInput v-model="stateRegister.email" placeholder="Enter an email" />
         </UFormField>
-        <UFormField label="Password">
+        <UFormField label="Password" name="password">
           <UInput v-model="stateRegister.password" type="password" placeholder="Enter a password" />
         </UFormField>
         <UButton type="submit" :loading="loadingRegister">Register</UButton>
@@ -119,10 +119,10 @@ async function onSubmitRegister(payload: FormSubmitEvent<typeof stateRegister>) 
         <div class="xl">Sign In</div>
       </template>
       <UForm :state="stateLogin" :validate="validateLogin" title="Sign In" icon="i-lucide-lock" @submit="onSubmitLogin">
-        <UFormField label="Email (no actual emails will be sent)">
+        <UFormField label="Email (no actual emails will be sent)" name="email">
           <UInput v-model="stateLogin.email" placeholder="Enter the email" />
         </UFormField>
-        <UFormField label="Password">
+        <UFormField label="Password" name="password">
           <UInput v-model="stateLogin.password" type="password" placeholder="Enter the password" />
         </UFormField>
         <UButton type="submit" :loading="loadingLogin">Login</UButton>

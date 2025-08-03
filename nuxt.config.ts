@@ -2,8 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-08-03',
   devtools: { enabled: true },
+  ssr: false,
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxt/eslint', '@nuxt/ui'],
+  modules: ['@nuxt/eslint', '@nuxt/ui', 'nuxt-auth-utils', 'nitro-cloudflare-dev'],
   nitro: {
     preset: "cloudflare_module",
     cloudflare: {

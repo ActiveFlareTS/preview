@@ -26,7 +26,6 @@ try {
     // Checking if wrangler is authenticated
     execSync('pnpx wrangler login', { stdio: 'inherit' });
     rl.question('What would you like to call your D1 database? (only letters and dashes, like v3-mysite-com): ', (dbName) => {
-  // Create a new D1 database with the provided name
 
       const output = execSync(`pnpx wrangler d1 create ${dbName}`, { encoding: 'utf8' });
       // Find the JSON object by removing lines until we hit a line that is just "{"
@@ -65,21 +64,15 @@ try {
       // Output the database name to the console
       console.log(`Database ${dbName} created successfully and updated wrangler.jsonc.`);
 
+      execSync('pnpx wrangler d1 execute --local --file ./shared/types/models/initial.sql ' + dbName, { stdio: 'inherit' });
 
       // Update wrangler types
       execSync('pnpx wrangler types', { stdio: 'inherit' });
-
-      // Checking if wrangler is authenticated
-      execSync('pnpx wrangler whoami', { stdio: 'inherit' });
 
       // Exit the process
       process.exit(0);
     });
   } else {
-    // Update wrangler types
-    execSync('pnpx wrangler types', { stdio: 'inherit' });
-
-
     process.exit(0);
   }
 } catch (error) {
