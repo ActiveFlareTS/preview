@@ -46,7 +46,7 @@ async function onSubmitLogin(payload: FormSubmitEvent<typeof stateLogin>) {
     }
   } catch (error) {
     if (error instanceof Error) {
-      output.value = JSON.stringify(error.message, null, 2) + "\n" + output.value;
+      output.value = error.message + "\n" + output.value;
     }
     return;
   } finally {
@@ -66,14 +66,14 @@ async function onSubmitRegister(
       payload.data
     );
     if (resp.success) {
-      output.value = JSON.stringify(resp.message, null, 2) + "\n" + output.value;;
+      output.value = resp.message + "\n" + output.value;
 
     } else {
       throw new Error(resp.message || resp.statusText || "Registration failed");
     }
   } catch (error) {
     if (error instanceof Error) {
-      output.value = JSON.stringify(error.message, null, 2) + "\n" + output.value;
+      output.value = error.message + "\n" + output.value;
     }
     return;
   } finally {
@@ -85,16 +85,12 @@ async function onSubmitRegister(
 <template>
   <body>
     <h1 class="m-4 font-extrabold xl">Welcome to ActiveFlareTS (Preview)</h1>
-    <p class="m-4">
-      This demo isn't quite working yet. Subscribe on
-      [Github](https://github.com/ActiveFlareTS/preview) for tagged versions.
-    </p>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <UCard class="p-0 m-4 col-span-1">
         <template #header>
           <div class="xl">Output</div>
         </template>
-        <UTextarea v-model="output" class="w-full h-full m-0" />
+        <UTextarea v-model="output" autoresize class="w-full  m-0" />
       </UCard>
       <div>
         <UCard class="p-0 m-4">

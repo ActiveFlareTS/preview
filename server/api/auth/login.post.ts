@@ -1,5 +1,5 @@
 
-import { ModelNotFoundError, sutando } from "sutando";
+import { ModelNotFoundError } from "sutando";
 
 export default defineEventHandler(async (e) => {
   const body = await readBody(e);
@@ -56,5 +56,5 @@ export default defineEventHandler(async (e) => {
     loggedInAt: Date.now(),
   });
 
-  return { success: true, user: user, message: "User " + user.id + " logged in!" } as ApiResponse;
+  return { success: true, user: user, message: "User ID " + user.id + " logged in!" } as ApiResponse;
 });

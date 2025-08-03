@@ -56,7 +56,7 @@ export default defineEventHandler(async (e) => {
 
   setResponseStatus(e, 200);
   return {
-    message: "User registered successfully",
+    message: "User ID " + safeInsert.id + " registered successfully.",
     success: true,
   } as ApiResponse;
 });
