@@ -29,6 +29,7 @@
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@types/node": "^24.1.0",
+    "eslint-plugin-vue": "^10.4.0",
     "nitro-cloudflare-dev": "^0.2.2",
     "wrangler": "^4.27.0"
   }

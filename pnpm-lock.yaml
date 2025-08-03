@@ -51,6 +51,9 @@ importers:
       '@types/node':
         specifier: ^24.1.0
         version: 24.1.0
+      eslint-plugin-vue:
+        specifier: ^10.4.0
+        version: 10.4.0(@typescript-eslint/parser@8.38.0(eslint@9.32.0(jiti@2.5.1))(typescript@5.9.2))(eslint@9.32.0(jiti@2.5.1))(vue-eslint-parser@10.2.0(eslint@9.32.0(jiti@2.5.1)))
       nitro-cloudflare-dev:
         specifier: ^0.2.2
         version: 0.2.2

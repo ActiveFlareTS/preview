@@ -9,14 +9,14 @@ try {
     output: process.stdout,
   });
 
-  // openssl rand -base64 32 | tr -d n
-  const dotEnvPath = path.resolve(__dirname, '..', '.env');
-  if (!fs.existsSync(dotEnvPath)) {
-    console.error('.env file not found... creating.');
-    const sessionPassword = execSync('openssl rand -base64 32 | tr -d n', { encoding: 'utf8' }).trim();
-    fs.writeFileSync(dotEnvPath, `NUXT_SESSION_PASSWORD=${sessionPassword}\nenvironment=development\n`, 'utf8');
-  }
-
+  const checkDotEnv = () => {
+    const dotEnvPath = path.resolve(__dirname, '..', '.env');
+    if (!fs.existsSync(dotEnvPath)) {
+      console.error('.env file not found... creating.');
+      const sessionPassword = execSync('openssl rand -base64 32 | tr -d n', { encoding: 'utf8' }).trim();
+      fs.writeFileSync(dotEnvPath, `NUXT_SESSION_PASSWORD=${sessionPassword}\nenvironment=development\n`, 'utf8');
+    }
+  };
 
   // Read wrangler.jsonc from parent directory
   const wranglerPath = path.resolve(__dirname, '..', 'wrangler.jsonc');
@@ -67,10 +67,13 @@ try {
       // Update wrangler types
       execSync('pnpx wrangler types', { stdio: 'inherit' });
 
+      checkDotEnv();
+
       // Exit the process
       process.exit(0);
     });
   } else {
+    checkDotEnv();
     process.exit(0);
   }
 } catch (error) {

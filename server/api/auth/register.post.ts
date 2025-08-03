@@ -28,7 +28,6 @@ export default defineEventHandler(async (e) => {
     console.log("Creating new user with email:", email);
     safeInsert = new User;
     safeInsert.email = email;
-    safeInsert.name = name;
     safeInsert.password = hashedPassword;
     safeInsert.role = 'user';
 

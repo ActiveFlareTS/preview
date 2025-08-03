@@ -27,16 +27,7 @@ const stateRegister = reactive({
   password: "",
 });
 
-const validateLogin = (state: any): FormError[] => {
-  const errors = []
-  if (!state.email) errors.push({ name: 'email', message: 'Required' })
-  if (!state.password) errors.push({ name: 'password', message: 'Required' })
-  if (state.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) {
-    errors.push({ name: 'email', message: 'Invalid email address' })
-  }
-  return errors
-}
-const validateRegister = (state: any): FormError[] => {
+const validate = (state: any): FormError[] => {
   const errors = []
   if (!state.email) errors.push({ name: 'email', message: 'Required' })
   if (!state.password) errors.push({ name: 'password', message: 'Required' })
@@ -98,12 +89,16 @@ async function onSubmitRegister(payload: FormSubmitEvent<typeof stateRegister>) 
 
   <body>
     <h1 class="m-4 font-extrabold xl">Welcome to ActiveFlareTS (Preview)</h1>
-    <p class="m-4">This demo isn't quite working yet.  Subscribe on [Github](https://github.com/ActiveFlareTS/preview) for tagged versions.</p>
+    <p class="m-4">This demo isn't quite working yet. Subscribe on [Github](https://github.com/ActiveFlareTS/preview)
+      for tagged versions.</p>
     <UCard class="p-4 m-4 ">
+
+
+
       <template #header>
         <div class="xl">Register</div>
       </template>
-      <UForm :state="stateRegister" :validate="validateRegister" title="Register" icon="i-lucide-lock"
+      <UForm :state="stateRegister" :validate="validate" title="Register" icon="i-lucide-lock"
         @submit="onSubmitRegister">
         <UFormField label="Email (no actual emails will be sent)" name="email">
           <UInput v-model="stateRegister.email" placeholder="Enter an email" />
@@ -118,7 +113,7 @@ async function onSubmitRegister(payload: FormSubmitEvent<typeof stateRegister>) 
       <template #header>
         <div class="xl">Sign In</div>
       </template>
-      <UForm :state="stateLogin" :validate="validateLogin" title="Sign In" icon="i-lucide-lock" @submit="onSubmitLogin">
+      <UForm :state="stateLogin" :validate="validate" title="Sign In" icon="i-lucide-lock" @submit="onSubmitLogin">
         <UFormField label="Email (no actual emails will be sent)" name="email">
           <UInput v-model="stateLogin.email" placeholder="Enter the email" />
         </UFormField>

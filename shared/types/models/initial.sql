@@ -17,7 +17,6 @@ CREATE TABLE `credentials` (
 CREATE UNIQUE INDEX `credentials_id_unique` ON `credentials` (`id`);
 CREATE TABLE `users` (
         `id` text PRIMARY KEY NOT NULL,
-        `name` text(50) NOT NULL,
         `email` text(50) NOT NULL,
         `password` text(200) NOT NULL,
         `verified` text(100) DEFAULT '',
