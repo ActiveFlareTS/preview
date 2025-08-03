@@ -1,6 +1,10 @@
 
 # Nuxt, Sutando, Cloudflare Workers, and Cloudflare D1: The Stack
 
+This repo only works in `pnpm run dev` mode (locally) due to some compatibility issues with Sutando, Knex, Rollup, Vite, and Nuxt.  If you'd like to purchase my work where I've figured this out, check out [activeflare.dev/pricing](https://activeflare.dev/pricing).
+
+Deploying to production doesn't work in this repo.
+
 ## Installation
 
 ```
