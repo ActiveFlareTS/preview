@@ -26,14 +26,12 @@ export const useBackend = () => {
         if (response.ok !== true) {
           if (response.statusText != "") {
             throw new Error(response.statusText || 'Unknown BE Error #1 occurred');
-          } else {
-            throw new Error(response.statusText || 'Unknown BE Error #1 occurred');
-
+          }
+          if (response.body) {
+            return response.json();
+          }
+          return response.text();
         }
-        if (response.body) {
-          return response.json();
-        }
-        return response.text();
       }).then((data) => {
         // Application layer
         console.log("Application layer data:", data);
