@@ -24,7 +24,11 @@ export const useBackend = () => {
         // Transport layer
         console.log("Transport layer response:", response);
         if (response.ok !== true) {
-          throw new Error(response.statusText || 'Unknown BE Error #1 occurred');
+          if (response.statusText != "") {
+            throw new Error(response.statusText || 'Unknown BE Error #1 occurred');
+          } else {
+            throw new Error(response.statusText || 'Unknown BE Error #1 occurred');
+
         }
         if (response.body) {
           return response.json();

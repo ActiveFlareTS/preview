@@ -1,4 +1,5 @@
 
+import type { ApiResponse } from "../../../shared/types/apiResponse";
 import { ModelNotFoundError } from "sutando";
 
 export default defineEventHandler(async (e) => {
@@ -21,23 +22,39 @@ export default defineEventHandler(async (e) => {
 
     if (!user) {
       console.log("User not found for username:", username);
-      return setResponseStatus(e, 404, "User not found");
+      setResponseStatus(e, 404, "User not found");
+      return {
+        message: "User not found",
+        success: false,
+      } as ApiResponse;
     }
     if (!await verifyPassword(user.password, password)) {
       console.log("Invalid password for user:", username);
-      return setResponseStatus(e, 401, "Invalid password");
+      setResponseStatus(e, 401, "Invalid password");
+      return {
+        message: "Invalid password",
+        success: false,
+      } as ApiResponse;
     }
   } catch (error) {
     if (error instanceof ModelNotFoundError) {
       console.log("ModelNotFoundError:", error);
-      return setResponseStatus(e, 401, "Not authorized");
+      setResponseStatus(e, 401, "Not authorized");
+      return {
+        message: "Not authorized",
+        success: false,
+      } as ApiResponse;
     }
     console.log("Database error:", error);
-    return setResponseStatus(
+    setResponseStatus(
       e,
       500,
       "An unexpected error occurred: " + (error as Error).message
     );
+    return {
+      message: "An unexpected error occurred: " + (error as Error).message,
+      success: false,
+    } as ApiResponse;
   }
   user = user as unknown as InstanceType<typeof User>;
   console.log("User found:", user);
