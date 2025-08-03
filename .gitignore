@@ -27,3 +27,5 @@ logs
 .wrangler
 wrangler.jsonc
 wrangler.toml
+worker-configuration.d.ts
+wrangler.jsonc

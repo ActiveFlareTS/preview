@@ -3,7 +3,7 @@ import { ModelNotFoundError, sutando } from "sutando";
 
 export default defineEventHandler(async (e) => {
   const body = await readBody(e);
-  const email = body.email.toLowerCase() as string;
+  const username = body.username.toLowerCase() as string;
   const password = body.password as string;
 
   let user;
@@ -23,16 +23,16 @@ export default defineEventHandler(async (e) => {
       console.log("User.query() failed:", queryError);
       throw queryError;
     }
-    const emailQuery = userQuery.email(email);
+    const usernameQuery = userQuery.username(username);
 
-    user = await emailQuery.first();
+    user = await usernameQuery.first();
 
     if (!user) {
-      console.log("User not found for email:", email);
+      console.log("User not found for username:", username);
       return setResponseStatus(e, 404, "User not found");
     }
     if (!await verifyPassword(user.password, password)) {
-      console.log("Invalid password for user:", email);
+      console.log("Invalid password for user:", username);
       return setResponseStatus(e, 401, "Invalid password");
     }
   } catch (error) {
@@ -52,7 +52,7 @@ export default defineEventHandler(async (e) => {
   await setUserSession(e, {
     user: {
       id: user.id,
-      email: email,
+      username: username,
       role: user.role || "user",
       verified: user.isVerified(),
     },

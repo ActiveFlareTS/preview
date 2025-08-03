@@ -17,12 +17,12 @@ CREATE TABLE `credentials` (
 CREATE UNIQUE INDEX `credentials_id_unique` ON `credentials` (`id`);
 CREATE TABLE `users` (
         `id` text PRIMARY KEY NOT NULL,
-        `email` text(50) NOT NULL,
+        `username` text(50) NOT NULL,
         `password` text(200) NOT NULL,
         `verified` text(100) DEFAULT '',
         `role` text DEFAULT 'user',
         `created_at` text DEFAULT (CURRENT_TIMESTAMP),
         `updated_at` text DEFAULT (CURRENT_TIMESTAMP)
 );
-CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);
-CREATE UNIQUE INDEX `idx_users_email` ON `users` (`email`);
+CREATE UNIQUE INDEX `users_username_unique` ON `users` (`username`);
+CREATE UNIQUE INDEX `idx_users_username` ON `users` (`username`);

@@ -2,15 +2,15 @@
 export default defineEventHandler(async (e) => {
   console.log("Registering new user...");
   const body = await readBody(e);
-  const email = body.email.toLowerCase() as string;
+  const username = body.username.toLowerCase() as string;
 
-  if (!email || !body.password) {
-    console.log("Email and password are required.");
-    return setResponseStatus(e, 400, "Email and password are required");
+  if (!username || !body.password) {
+    console.log("Username and password are required.");
+    return setResponseStatus(e, 400, "Username and password are required");
   }
-  if (email.length < 5 || body.password.length < 6) {
+  if (username.length < 5 || body.password.length < 6) {
     console.log("Invalid lengths");
-    return setResponseStatus(e, 400, "Email and password must be of valid length");
+    return setResponseStatus(e, 400, "Username and password must be of valid length");
   }
   const hashedPassword = await hashPassword(body.password as string);
   console.log("Verification complete... proceeding with user creation");
@@ -19,15 +19,15 @@ export default defineEventHandler(async (e) => {
   console.log("Created stub user.", safeInsert)
 
   try {
-    const existingUser = await User.query().email(email).first();
+    const existingUser = await User.query().username(username).first();
     if (existingUser) {
-      console.log("User already exists with this email:", email);
-      return setResponseStatus(e, 409, "User already exists with this email");
+      console.log("User already exists with this username:", username);
+      return setResponseStatus(e, 409, "User already exists with this username");
     }
 
-    console.log("Creating new user with email:", email);
+    console.log("Creating new user with username:", username);
     safeInsert = new User;
-    safeInsert.email = email;
+    safeInsert.username = username;
     safeInsert.password = hashedPassword;
     safeInsert.role = 'user';
 
@@ -42,7 +42,7 @@ export default defineEventHandler(async (e) => {
   await setUserSession(e, {
     user: {
       id: safeInsert.id,
-      email: email,
+      username: username,
       role: safeInsert.role,
       verified: safeInsert.isVerified(),
     },

@@ -15,8 +15,7 @@ export class User extends compose(Model, HasUniqueIds) {
   //declare is for type declaration only; it won’t emit code for the property and is often used for interoperability or type - only scenarios.
 
   id!: string;
-  name!: string;
-  email!: string;
+  username!: string;
   password!: string;
   verified!: string;
   role!: string;
@@ -35,8 +34,8 @@ export class User extends compose(Model, HasUniqueIds) {
     // role is an enum: 'user' | 'admin'
   };
 
-  scopeEmail(query: Builder<User>, email: string) {
-    return query.where('email', email);
+  scopeUsername(query: Builder<User>, username: string) {
+    return query.where('username', username);
   }
 
   isVerified() {
