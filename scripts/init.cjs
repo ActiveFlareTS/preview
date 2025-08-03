@@ -9,11 +9,22 @@ try {
     output: process.stdout,
   });
 
+  // openssl rand -base64 32 | tr -d n
+  const dotEnvPath = path.resolve(__dirname, '..', '.env');
+  if (!fs.existsSync(dotEnvPath)) {
+    console.error('.env file not found... creating.');
+    const sessionPassword = execSync('openssl rand -base64 32 | tr -d n', { encoding: 'utf8' }).trim();
+    fs.writeFileSync(dotEnvPath, `NUXT_SESSION_PASSWORD=${sessionPassword}\nenvironment=development\n`, 'utf8');
+  }
+
+
   // Read wrangler.jsonc from parent directory
   const wranglerPath = path.resolve(__dirname, '..', 'wrangler.jsonc');
   let wranglerContent = fs.readFileSync(wranglerPath, 'utf8');
 
   if (wranglerContent.includes('REPLACE_DB_NAME') || wranglerContent.includes('REPLACE_DB_ID')) {
+    // Checking if wrangler is authenticated
+    execSync('pnpx wrangler login', { stdio: 'inherit' });
     rl.question('What would you like to call your D1 database? (only letters and dashes, like v3-mysite-com): ', (dbName) => {
   // Create a new D1 database with the provided name
 
@@ -68,8 +79,7 @@ try {
     // Update wrangler types
     execSync('pnpx wrangler types', { stdio: 'inherit' });
 
-    // Checking if wrangler is authenticated
-    execSync('pnpx wrangler whoami', { stdio: 'inherit' });
+
     process.exit(0);
   }
 } catch (error) {
