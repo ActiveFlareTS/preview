@@ -1,0 +1,27 @@
+{
+  "name": "activeflarets-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "init": "node --no-warnings --loader ts-node/esm ./scripts/init.mjs",
+    "build": "nuxt build",
+    "dev": "nuxt dev --public",
+    "deploy": "echo This doesn't work out of the box - it took me a few days to figure out how to get this to deploy correct.  Visit activeflare.dev/pricing to get the tools I used to make it work.",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "1.7.1",
+    "@nuxt/ui": "3.3.0",
+    "eslint": "^9.32.0",
+    "knex-cloudflare-d1": "^0.2.1",
+    "nuxt": "^4.0.1",
+    "sqlite3": "^5.1.7",
+    "sutando": "^1.7.2",
+    "typescript": "^5.9.2",
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1"
+  },
+  "packageManager": "pnpm@10.13.1"
+}
