@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "init": "node --no-warnings --loader ts-node/esm ./scripts/init.mjs",
+    "init": "node ./scripts/init.cjs",
     "build": "nuxt build",
     "dev": "nuxt dev --public",
     "deploy": "echo This doesn't work out of the box - it took me a few days to figure out how to get this to deploy correct.  Visit activeflare.dev/pricing to get the tools I used to make it work.",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "if [ -f .env ]; then nuxt prepare; fi"
   },
   "dependencies": {
     "@nuxt/eslint": "1.7.1",
@@ -23,5 +23,8 @@
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
-  "packageManager": "pnpm@10.13.1"
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "@types/node": "^24.1.0"
+  }
 }

@@ -11,6 +11,7 @@ Deploying to production doesn't work in this repo.
 git clone github.com:activeflarets/preview.git activeflarets-preview
 cd activeflarets-preview
 brew install pnpm # or npm install -g pnpm
+pnpm install
 pnpm run init
 ```
 
