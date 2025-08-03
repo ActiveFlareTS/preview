@@ -8,14 +8,6 @@ export default defineEventHandler(async (e) => {
 
   let user;
   try {
-    console.log("Checking Sutando connection status...");
-    console.log("sutando object:", typeof sutando);
-    console.log("Skipping sutando.connection() check due to minification issues...");
-
-    console.log("Cloudflare env check:");
-    console.log("D1 database:", e.context.cloudflare?.env?.DB ? "available" : "not available");
-
-    console.log("About to call User.query()...");
     let userQuery;
     try {
       userQuery = User.query();
@@ -64,5 +56,5 @@ export default defineEventHandler(async (e) => {
     loggedInAt: Date.now(),
   });
 
-  return { success: true, user: user } as ApiResponse;
+  return { success: true, user: user, message: "User " + user.id + " logged in!" } as ApiResponse;
 });

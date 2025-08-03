@@ -8,9 +8,9 @@ export default defineEventHandler(async (e) => {
     console.log("Username and password are required.");
     return setResponseStatus(e, 400, "Username and password are required");
   }
-  if (username.length < 5 || body.password.length < 6) {
+  if (username.length < 6 || body.password.length < 6) {
     console.log("Invalid lengths");
-    return setResponseStatus(e, 400, "Username and password must be of valid length");
+    return setResponseStatus(e, 400, "Username and password must be of valid length (> 6 characters)");
   }
   const hashedPassword = await hashPassword(body.password as string);
   console.log("Verification complete... proceeding with user creation");

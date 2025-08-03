@@ -16,8 +16,6 @@ useSeoMeta({
   description: "Login to your account to continue",
 });
 
-const toast = useToast();
-
 const stateLogin = reactive({
   username: "",
   password: "",
@@ -28,10 +26,12 @@ const stateRegister = reactive({
   password: "",
 });
 
-const validate = (state: typeof stateLogin | typeof stateRegister): FormError[] => {
+const validate = (
+  state: typeof stateLogin | typeof stateRegister
+): FormError[] => {
   const errors = [];
-  if (!state.username) errors.push({ name: "username", message: "Required" });
-  if (!state.password) errors.push({ name: "password", message: "Required" });
+  if (!state.username || state.username.length < 6) errors.push({ name: "username", message: "Required > 6 characters" });
+  if (!state.password || state.password.length < 6) errors.push({ name: "password", message: "Required > 6 characters" });
   return errors;
 };
 
@@ -40,27 +40,13 @@ async function onSubmitLogin(payload: FormSubmitEvent<typeof stateLogin>) {
     loadingLogin.value = true;
     const resp = await sendToBackend("post", "/api/auth/login", payload.data);
     if (resp.success) {
-      toast.add({
-        title: "Login successful",
-        description: "Welcome back!",
-        color: "success",
-      });
+      output.value = resp.message + "\n" + output.value;
     } else {
       throw new Error(resp.message || resp.statusText || "Login failed");
     }
   } catch (error) {
     if (error instanceof Error) {
-      toast.add({
-        title: "Login failed",
-        description: error.message,
-        color: "warning",
-      });
-    } else {
-      toast.add({
-        title: "Login failed",
-        description: "An unexpected error occurred",
-        color: "warning",
-      });
+      output.value = JSON.stringify(error.message, null, 2) + "\n" + output.value;
     }
     return;
   } finally {
@@ -80,28 +66,14 @@ async function onSubmitRegister(
       payload.data
     );
     if (resp.success) {
-      output.value = JSON.stringify(resp, null, 2);
-      toast.add({
-        title: "Register successful",
-        description: "Welcome aboard!",
-        color: "success",
-      });
+      output.value = JSON.stringify(resp.message, null, 2) + "\n" + output.value;;
+
     } else {
       throw new Error(resp.message || resp.statusText || "Registration failed");
     }
   } catch (error) {
     if (error instanceof Error) {
-      toast.add({
-        title: "Registration failed",
-        description: error.message,
-        color: "warning",
-      });
-    } else {
-      toast.add({
-        title: "Registration failed",
-        description: "An unexpected error occurred",
-        color: "warning",
-      });
+      output.value = JSON.stringify(error.message, null, 2) + "\n" + output.value;
     }
     return;
   } finally {
@@ -136,10 +108,7 @@ async function onSubmitRegister(
             icon="i-lucide-lock"
             @submit="onSubmitRegister"
           >
-            <UFormField
-              label="Enter a fake username"
-              name="username"
-            >
+            <UFormField label="Enter a fake username" name="username">
               <UInput
                 v-model="stateRegister.username"
                 placeholder="Enter a username"
@@ -166,10 +135,7 @@ async function onSubmitRegister(
             icon="i-lucide-lock"
             @submit="onSubmitLogin"
           >
-            <UFormField
-              label="Reuse username from above"
-              name="username"
-            >
+            <UFormField label="Reuse username from above" name="username">
               <UInput
                 v-model="stateLogin.username"
                 placeholder="Enter the username"
