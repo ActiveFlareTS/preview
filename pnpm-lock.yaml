@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  knex: github:pnwmatt/knex-on-cloudflare-workers#v1.0.1
-
 importers:
 
   .:
@@ -20,9 +17,6 @@ importers:
       eslint:
         specifier: ^9.32.0
         version: 9.32.0(jiti@2.5.1)
-      knex:
-        specifier: github:pnwmatt/knex-on-cloudflare-workers#v1.0.1
-        version: git+https://git@github.com:pnwmatt/knex-on-cloudflare-workers.git#bf98a18824e4a57b9fc9ae84d89c45fdbed88315
       knex-cloudflare-d1:
         specifier: ^0.2.1
         version: 0.2.1(knex@git+https://git@github.com:pnwmatt/knex-on-cloudflare-workers.git#bf98a18824e4a57b9fc9ae84d89c45fdbed88315)
